@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>School Login</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#0a4ea1;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+}
+
+.login-box{
+background:white;
+padding:40px;
+border-radius:8px;
+width:300px;
+text-align:center;
+}
+
+input{
+width:90%;
+padding:10px;
+margin:10px 0;
+}
+
+button{
+padding:10px 20px;
+background:#0a4ea1;
+color:white;
+border:none;
+cursor:pointer;
+}
+
+button:hover{
+background:#083a78;
+}
+
+#error{
+color:red;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="login-box">
+
+<h2>UHS Siyarahi Login</h2>
+
+<input type="text" id="username" placeholder="Username">
+
+<input type="password" id="password" placeholder="Password">
+
+<button onclick="login()">Login</button>
+
+<p id="error"></p>
+
+</div>
+
+<script>
+
+function login(){
+
+let user=document.getElementById("username").value
+let pass=document.getElementById("password").value
+
+/* ADMIN LOGIN */
+
+if(user==="admin" && pass==="1234"){
+
+window.location="admin.html"
+return
+
+}
+
+/* TEACHER LOGIN */
+
+let teachers = JSON.parse(localStorage.getItem("teachers")) || []
+
+let found = teachers.find(t =>
+t.username===user && t.password===pass
+)
+
+if(found){
+
+localStorage.setItem("teacherName",found.fullname)
+
+window.location="teacher.html"
+
+}
+
+else{
+
+document.getElementById("error").innerText="Invalid Username or Password"
+
+}
+
+}
+
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Teacher Dashboard</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+background:#f2f4f8;
+}
+
+/* HEADER */
+
+header{
+background:#0a4ea1;
+color:white;
+padding:15px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+/* MAIN */
+
+.container{
+padding:20px;
+}
+
+/* CARD */
+
+.card{
+background:white;
+padding:20px;
+margin-bottom:20px;
+border-radius:8px;
+box-shadow:0 2px 10px rgba(0,0,0,0.1);
+}
+
+/* BUTTON */
+
+button{
+background:#0a4ea1;
+color:white;
+padding:8px 15px;
+border:none;
+border-radius:5px;
+cursor:pointer;
+}
+
+button:hover{
+background:#083a78;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<h2 id="welcomeText">Teacher Dashboard</h2>
+
+<button onclick="logout()">Logout</button>
+
+</header>
+
+<div class="container">
+
+<!-- ATTENDANCE -->
+
+<div class="card">
+
+<h3>Today's Attendance</h3>
+
+<p id="attendanceStatus">Loading...</p>
+
+</div>
+
+<!-- NOTICE BOARD -->
+
+<div class="card">
+
+<h3>Notice Board</h3>
+
+<p id="noticeBoard">No Notice Available</p>
+
+</div>
+
+<!-- PROFILE -->
+
+<div class="card">
+
+<h3>Teacher Profile</h3>
+
+<p id="profileName"></p>
+<p id="profileUser"></p>
+
+</div>
+
+</div>
+
+<script>
+
+/* TEACHER NAME */
+
+let teacherName = localStorage.getItem("teacherName")
+
+document.getElementById("welcomeText").innerText =
+"Welcome " + teacherName
+
+/* GET TEACHER LIST */
+
+let teachers = JSON.parse(localStorage.getItem("teachers")) || []
+
+let teacherIndex = teachers.findIndex(t => t.fullname === teacherName)
+
+/* PROFILE INFO */
+
+if(teacherIndex !== -1){
+
+document.getElementById("profileName").innerText =
+"Full Name: " + teachers[teacherIndex].fullname
+
+document.getElementById("profileUser").innerText =
+"Username: " + teachers[teacherIndex].username
+
+}
+
+/* ATTENDANCE */
+
+let attendance = JSON.parse(localStorage.getItem("attendance")) || {}
+
+let status = attendance[teacherIndex] || "Not Marked"
+
+document.getElementById("attendanceStatus").innerText =
+status
+
+/* NOTICE */
+
+let notice = localStorage.getItem("notice")
+
+if(notice){
+
+document.getElementById("noticeBoard").innerText = notice
+
+}
+
+/* LOGOUT */
+
+function logout(){
+
+window.location="uhslogin.html"
+
+}
+
+</script>
+
+</body>
+
+</html>
